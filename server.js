@@ -1,8 +1,10 @@
 const express = require('express');
-const fetch = require('node-fetch'); // install node-fetch@2
+const fetch = require('node-fetch');
+const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 
 app.post('/forward', async (req, res) => {
@@ -15,12 +17,9 @@ app.post('/forward', async (req, res) => {
     });
     res.status(200).send('Location forwarded successfully.');
   } catch (error) {
+    console.error(error);
     res.status(500).send('Error forwarding location.');
   }
-});
-
-app.get('/', (req, res) => {
-  res.send('Server running...');
 });
 
 app.listen(PORT, () => {
